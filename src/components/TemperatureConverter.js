@@ -3,15 +3,19 @@ import React, { useState } from "react";
 const TemperatureConverter = () => {
   let [ temperature, setTemperature ] = useState("");
   const handleTemperature = (valorTecla) => {
-    if(valorTecla === "," && temperature.includes(",")) {
+    if(valorTecla === "." && temperature.includes(".")) {
       return false;
     }
-    if(valorTecla === "-" && temperature === "") {
-      console.log("Sinal negativo no início");
-      setTemperature(valorTecla);
+    if(valorTecla === "-") {
+      if(temperature === "") {
+        setTemperature(valorTecla);
+        return true;
+      }
+      return false;
+    } 
+    if(valorTecla === "." && (temperature === "" || temperature === "-")) {
+      setTemperature(temperature + "0.");
       return true;
-    } else {
-      console.log("Sinal negativo em qualquer lugar");
     }
     setTemperature(temperature + valorTecla);
   }
@@ -57,7 +61,7 @@ const TemperatureConverter = () => {
         <button className="n8 tecla" onClick={() => handleTemperature("8")}>8</button>
         <button className="n9 tecla" onClick={() => handleTemperature("9")}>9</button>
         <button className="n0 tecla" onClick={() => handleTemperature("0")}>0</button>
-        <button className="virgula tecla" onClick={() => handleTemperature(",")}>,</button>
+        <button className="virgula tecla" onClick={() => handleTemperature(".")}>.</button>
         <button className="limpa tecla"></button>
         <button className="negativo tecla" onClick={() => handleTemperature("-")}>-</button>
         <div className="reset tecla">Nova conversão</div>
