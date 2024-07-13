@@ -24,6 +24,9 @@ const TemperatureConverter = () => {
     setTemperature(temperature);
   }
   const handleConverter = ()  => {
+    const resultCelsius = document.querySelector("#celsius-temp");
+    const resultFahrenheit = document.querySelector("#fahrenheit-temp");
+    const resultKelvin = document.querySelector("#kelvin-temp");
     const fromTemp = document.querySelector("#user-choice").options[document.querySelector("#user-choice").selectedIndex].value;
     console.log(fromTemp);
     let calcTemperature = Number(Number(temperature).toFixed(2));
@@ -47,9 +50,9 @@ const TemperatureConverter = () => {
         kelvinTemperature = calcTemperature;
         break;
     }
-    console.log("Celsius: ",celsiusTemperature);
-    console.log("Fahrenheit: ",fahrenheitTemperature);
-    console.log("Kelvin: ",kelvinTemperature);
+    resultCelsius.insertAdjacentHTML("afterbegin",celsiusTemperature);
+    resultFahrenheit.insertAdjacentHTML("afterbegin",fahrenheitTemperature);
+    resultKelvin.insertAdjacentHTML("afterbegin",kelvinTemperature);
   }
   return (
     <>
