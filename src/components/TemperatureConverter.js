@@ -1,10 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
 const TemperatureConverter = () => {
+  let [ temperature, setTemperature ] = useState("");
+  const handleTemperature = (valorTecla) => {
+    if(valorTecla === "," && temperature.includes(",")) {
+      return false;
+    }
+    if(valorTecla === "-" && temperature === "") {
+      console.log("Sinal negativo no início");
+      setTemperature(valorTecla);
+      return true;
+    } else {
+      console.log("Sinal negativo em qualquer lugar");
+    }
+    setTemperature(temperature + valorTecla);
+  }
   return (
     <>
       <aside className="areaResultado">
-        <input id="user-temp" defaultValue="" />
+        <input id="user-temp" defaultValue={ temperature } />
         <select id="user-choice">
           <option value="C">Celsius</option>
           <option value="F">Fahrenheit</option>
@@ -33,19 +47,19 @@ const TemperatureConverter = () => {
         </button>
       </aside>
       <aside className="areaTeclas">
-        <button className="n1 tecla">1</button>
-        <button className="n2 tecla">2</button>
-        <button className="n3 tecla">3</button>
-        <button className="n4 tecla">4</button>
-        <button className="n5 tecla">5</button>
-        <button className="n6 tecla">6</button>
-        <button className="n7 tecla">7</button>
-        <button className="n8 tecla">8</button>
-        <button className="n9 tecla">9</button>
-        <button className="n0 tecla">0</button>
-        <button className="virgula tecla">,</button>
+        <button className="n1 tecla" onClick={() => handleTemperature("1")}>1</button>
+        <button className="n2 tecla" onClick={() => handleTemperature("2")}>2</button>
+        <button className="n3 tecla" onClick={() => handleTemperature("3")}>3</button>
+        <button className="n4 tecla" onClick={() => handleTemperature("4")}>4</button>
+        <button className="n5 tecla" onClick={() => handleTemperature("5")}>5</button>
+        <button className="n6 tecla" onClick={() => handleTemperature("6")}>6</button>
+        <button className="n7 tecla" onClick={() => handleTemperature("7")}>7</button>
+        <button className="n8 tecla" onClick={() => handleTemperature("8")}>8</button>
+        <button className="n9 tecla" onClick={() => handleTemperature("9")}>9</button>
+        <button className="n0 tecla" onClick={() => handleTemperature("0")}>0</button>
+        <button className="virgula tecla" onClick={() => handleTemperature(",")}>,</button>
         <button className="limpa tecla"></button>
-        <button className="negativo tecla">-</button>
+        <button className="negativo tecla" onClick={() => handleTemperature("-")}>-</button>
         <div className="reset tecla">Nova conversão</div>
       </aside>
     </>
