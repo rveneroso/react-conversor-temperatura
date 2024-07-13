@@ -2,6 +2,9 @@ import React, { useState } from "react";
 
 const TemperatureConverter = () => {
   let [ temperature, setTemperature ] = useState("");
+  const userSelect = document.querySelector("#user-choice");
+  const teclas = document.querySelectorAll(".tecla");
+  const resultados = document.querySelectorAll(".result");
   const handleTemperature = (valorTecla) => {
     if(valorTecla === "." && temperature.includes(".")) {
       return false;
@@ -24,6 +27,13 @@ const TemperatureConverter = () => {
     setTemperature(temperature);
   }
   const handleConverter = ()  => {
+    if(temperature === "-0") {
+      setTemperature("0");
+    }
+    userSelect.setAttribute("disabled",true);
+    [].map.call(teclas, (el) => {
+      return el.setAttribute("disabled",true);
+    });
     const resultCelsius = document.querySelector("#celsius-temp");
     const resultFahrenheit = document.querySelector("#fahrenheit-temp");
     const resultKelvin = document.querySelector("#kelvin-temp");
@@ -50,9 +60,21 @@ const TemperatureConverter = () => {
         kelvinTemperature = calcTemperature;
         break;
     }
-    resultCelsius.insertAdjacentHTML("afterbegin",celsiusTemperature);
-    resultFahrenheit.insertAdjacentHTML("afterbegin",fahrenheitTemperature);
-    resultKelvin.insertAdjacentHTML("afterbegin",kelvinTemperature);
+    resultCelsius.insertAdjacentHTML("afterbegin",celsiusTemperature.toFixed(2));
+    resultFahrenheit.insertAdjacentHTML("afterbegin",fahrenheitTemperature.toFixed(2));
+    resultKelvin.insertAdjacentHTML("afterbegin",kelvinTemperature.toFixed(2));
+  }
+  const handleReset = () => {
+    [].map.call(teclas, (el) => {
+      return el.removeAttribute("disabled");
+    });
+    [].map.call(resultados, (el) => {
+      if (el.hasChildNodes()) {
+        return el.removeChild(el.firstChild);
+      }
+    });
+    userSelect.removeAttribute("disabled");
+    setTemperature("");
   }
   return (
     <>
@@ -99,7 +121,7 @@ const TemperatureConverter = () => {
         <button className="virgula tecla" onClick={() => handleTemperature(".")}>.</button>
         <button className="limpa tecla" onClick={() => handleBackspace()}></button>
         <button className="negativo tecla" onClick={() => handleTemperature("-")}>-</button>
-        <div className="reset tecla">Nova conversão</div>
+        <div className="reset tecla" onClick={() => handleReset()}>Nova conversão</div>
       </aside>
     </>
   );
